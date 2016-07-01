@@ -5,5 +5,29 @@
 
   <!--browser view registrations go here-->
 
+  <browser:page
+	for="eudat.accounting.server.interfaces.IDomain"
+	name="addAccount"
+	class="eudat.accounting.server.browser.domain.DomainView"
+	attribute="addAccount"
+	permission="eudat.accounting.server.add_account"
+	/>
+
+  <browser:page
+	for="eudat.accounting.server.interfaces.IAccount"
+	name="addRecord"
+	class="eudat.accounting.server.browser.account.AccountView"
+	attribute="addRecord"
+	permission="eudat.accounting.server.add_record"
+	/>
+
+  <browser:page
+	for="eudat.accounting.server.interfaces.IAccount"
+	name="listRecords"
+	class="eudat.accounting.server.browser.account.AccountView"
+	attribute="listRecords"
+	permission="eudat.accounting.server.view_record"
+	/>
+
 </configure>
 

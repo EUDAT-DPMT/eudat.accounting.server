@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="eudat.accounting.server">    
+
+  <!--five:registerPackage package="." initialize=".initialize" /-->
+
+  <!-- Declare marker interface, so that it is available in ZMI -->
+  <interface interface="eudat.accounting.server.interfaces.IDomain" />
+  <interface interface="eudat.accounting.server.interfaces.IAccount" />
+
+  <!-- Define custom permissions -->
+  <permission
+    id="eudat.accounting.server.add_account"
+    title="Add account"
+    />  
+  
+  <permission
+    id="eudat.accounting.server.add_record"
+    title="Add record"
+    />  
+  
+  <permission
+    id="eudat.accounting.server.view_record"
+    title="View record"
+    />  
+  
+  <permission
+    id="pcp.contenttypes.modify_internals"
+    title="Modify internals"
+    />  
+  
+  <!-- Include the sub-packages that use their own configure.zcml files. -->
+  <include package=".browser" />
+
+</configure>

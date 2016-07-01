@@ -29,5 +29,13 @@
 	permission="eudat.accounting.server.view_record"
 	/>
 
+  <browser:page
+	for="eudat.accounting.server.interfaces.IAccount"
+	name="listRecordKeys"
+	class="eudat.accounting.server.browser.account.AccountView"
+	attribute="listRecordKeys"
+	permission="eudat.accounting.server.view_record"
+	/>
+
 </configure>
 

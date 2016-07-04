@@ -1,6 +1,6 @@
-
 import json
 import time
+from datetime import datetime
 
 from BTrees.IOBTree import IOBTree
 from persistent.mapping import PersistentMapping
@@ -25,8 +25,15 @@ class AccountView(BrowserView):
             data = self.context._data = IOBTree()
         if key is None:
             key = int(time.time())  # Seconds since 1.1.1970 0:00 UTC
+            submission_t = datetime.utcfromtimestamp(key)
+        else:
+            submission_t = datetime.utcnow()
+        if meta is None:
+            meta = {}
+        meta = dict(meta)
+        meta['submission_time'] = submission_t.isoformat(' ')
         record = PersistentMapping()
-        record['core'] = core
+        record['core'] = dict(core)
         record['meta'] = meta
         data[key] = record
         return key

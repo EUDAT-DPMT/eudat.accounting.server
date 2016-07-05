@@ -97,8 +97,8 @@ the virtualenv folder. An example configuration could look like this:
 This example already illustrates how to install two server clients
 sharing the same database instance via ZEO. It also shows how to
 install the code base of the application direclty from GitHub - 
-assuming yu have cloned teh repository into ``src/``. When 
-working with a release, the ``develp`` directive can be skipped.
+assuming you have cloned the repository into ``src/``. When 
+working with a release, the ``develop`` directive can be skipped.
 
 Running 
 
@@ -107,7 +107,7 @@ Running
   $ bin/buildout [-v]
 
 will generate the entire application. To run it make sure to
-to start ZEO first follow by the application server instance:
+start ZEO first followed by the application server instance:
 
 .. code:: console
 
@@ -135,12 +135,12 @@ available under the ``Interfaces`` tab. It is also recommended to
 add a ``User Folder`` (available from the ``Add`` drop-down)
 where you define the users for this domain.
 
-Next, create one or several accounts within the domain. Again these
+Next, create one or several *accounts* within the domain. Again these
 are just ``BTreeFolders`` but this time marked with
 ``eudat.accounting.server.interfaces.IAccount``
 
 That's it. Now, records can be added to these accouts using 
-the client mentined above and records can be listed by invoking
+the client mentioned above and records can be listed by invoking
 ``<base_url>/<domain_id>/<account_id>/listRecords``
 
 

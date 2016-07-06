@@ -15,7 +15,7 @@ is no user interface except for a few primitiv web-based
 admin views to create domains, accounts and users.
 
 Record creation is easiest with the accompanying command
-line client available from https://github.com/raphael-ritz/eudat.accounting.client
+line client available from https://github.com/EUDAT-DPMT/eudat.accounting.client
 but any way to generate a suitble HTTP request will work
 (details below).
 

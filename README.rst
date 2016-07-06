@@ -157,13 +157,13 @@ Links
 
 Project home page
 
-  https://github.com/raphael-ritz/eudat.accounting.server
+  https://github.com/EUDAT-DPMT/eudat.accounting.server
 
 Source code
 
-  https://github.com/raphael-ritz/eudat.accounting.server
+  https://github.com/EUDAT-DPMT/eudat.accounting.server
 
 Issues tracker
 
-  https://github.com/raphael-ritz/eudat.accounting.server/issues
+  https://github.com/EUDAT-DPMT/eudat.accounting.server/issues
 

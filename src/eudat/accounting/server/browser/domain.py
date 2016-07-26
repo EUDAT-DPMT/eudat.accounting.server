@@ -20,4 +20,5 @@ class DomainView(BrowserView):
             # careful: this works even if no user 'owner' exists
             # TODO: add check here?
             account.manage_addLocalRoles(owner, ['Owner'])
-        return "Account '%s (%s)' created." % (id, title
+        return "Account '%s (%s)' created." % (id, title)
+

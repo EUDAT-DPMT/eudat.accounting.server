@@ -41,7 +41,11 @@ class AccountView(BrowserView):
     def listRecordKeys(self, n=10):
         """List the last n records keys (default: 10)"""
         n = int(n) + 1
-        data = self.context._data
+        try:
+            data = self.context._data
+        except AttributeError:
+            # no records yet
+            return []
         result = list(self.context._data.keys())[:-n:-1]
         return result
 
@@ -49,13 +53,17 @@ class AccountView(BrowserView):
         """List the last n record items (keys and values)
         as JSON"""
         n = int(n) + 1
-        data = self.context._data
-        keys = list(self.context._data.keys())[:-n:-1]
         result = []
-        for k in keys:
-            v = dict(data[k])
-            record = {}
-            record[k] = v
-            result.append(record)
+        try:
+            data = self.context._data
+            keys = list(data.keys())[:-n:-1]
+            for k in keys:
+                v = dict(data[k])
+                record = {}
+                record[k] = v
+                result.append(record)
+        except AttributeError:
+            # no records yet
+            pass
         self.request.response.setHeader('Content-type', 'application/json')
         return json.dumps(result, indent=4)

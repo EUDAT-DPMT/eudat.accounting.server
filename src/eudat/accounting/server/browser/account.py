@@ -62,8 +62,7 @@ class AccountView(BrowserView):
         keys = list(data.keys())[:-n:-1]
         for k in keys:
             v = dict(data[k])
-            record = {}
-            record[k] = v
-            result.append(record)
+            v['meta']['ts'] = k
+            result.append(v)
         self.request.response.setHeader('Content-type', 'application/json')
         return json.dumps(result, indent=4)

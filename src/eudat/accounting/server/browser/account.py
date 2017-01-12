@@ -56,14 +56,14 @@ class AccountView(BrowserView):
         result = []
         try:
             data = self.context._data
-            keys = list(data.keys())[:-n:-1]
-            for k in keys:
-                v = dict(data[k])
-                record = {}
-                record[k] = v
-                result.append(record)
         except AttributeError:
-            # no records yet
-            pass
+            data = {}
+
+        keys = list(data.keys())[:-n:-1]
+        for k in keys:
+            v = dict(data[k])
+            record = {}
+            record[k] = v
+            result.append(record)
         self.request.response.setHeader('Content-type', 'application/json')
         return json.dumps(result, indent=4)

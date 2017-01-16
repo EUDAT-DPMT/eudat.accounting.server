@@ -67,5 +67,5 @@ class AccountView(BrowserView):
             result.append(v)
         json_data = json.dumps(result, indent=4)
         self.request.response.setHeader('Content-type', 'application/json')
-        self.request.response.setHeader('Content-length', str(len(json_data))
+        self.request.response.setHeader('Content-length', str(len(json_data)))
         return json_data

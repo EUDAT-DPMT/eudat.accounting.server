@@ -27,6 +27,7 @@ class AccountView(BrowserView):
             key = int(time.time())  # Seconds since 1.1.1970 0:00 UTC
             submission_t = datetime.utcfromtimestamp(key)
         else:
+            key = int(key)
             submission_t = datetime.utcnow()
         if meta is None:
             meta = {}

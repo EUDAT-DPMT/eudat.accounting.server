@@ -19,18 +19,29 @@ class AccountView(BrowserView):
         Metadata is optional
         Return the key under which the record has been created
         """
+
+        grace_period_days = getattr(self, 'grace_period_days', 7)
+        now = datetime.utcnow()
+
         try:
             data = self.context._data
         except AttributeError:
             data = self.context._data = IOBTree()
+
         if key is None:
             key = int(time.time())  # Seconds since 1.1.1970 0:00 UTC
             submission_t = datetime.utcfromtimestamp(key)
+
         else:
             key = int(key)
+            key_dt = datetime.utcfromtimestamp(key)
             submission_t = datetime.utcnow()
-        if meta is None:
-            meta = {}
+            if key_dt >= now:
+                raise ValueError('Timestamp is in future...time travel?')
+            if (now - key_dt).days > grace_period_days:
+                raise ValueError('Timestamp is outside grace period of {} days'.format(grace_period_days))
+
+        meta = meta or {}
         meta = dict(meta)
         meta['submission_time'] = submission_t.isoformat(' ')
         record = PersistentMapping()

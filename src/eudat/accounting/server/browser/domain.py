@@ -1,3 +1,5 @@
+import json
+
 from zope.interface import alsoProvides
 from Products.Five.browser import BrowserView
 from Products.BTreeFolder2.BTreeFolder2 import manage_addBTreeFolder
@@ -5,6 +7,11 @@ from eudat.accounting.server.interfaces import IAccount
 
 class DomainView(BrowserView):
     """Browser views of a domain"""
+
+    def hasAccount(self, id):
+        """ Check if the current Domain folder has an account with ID ``id`` """
+        self.request.response.setHeader('content-type', 'application/json')
+        return json.dumps(dict(exists=id in self.context.objectIds()))
 
     def addAccount(self, id, title='', owner=None):
         """
@@ -28,6 +35,7 @@ class DomainView(BrowserView):
         manage_addBTreeFolder(self.context, id=id, title=title)
         account = self.context[id]
         alsoProvides(account, IAccount)
+        account.manage_addProperty('grace_period_days', 7, 'int')
         if owner is not None:
             account.manage_addLocalRoles(owner, ['Owner'])
         self.request.response.setStatus(201)

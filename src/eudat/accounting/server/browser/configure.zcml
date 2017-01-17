@@ -7,6 +7,14 @@
 
   <browser:page
 	for="eudat.accounting.server.interfaces.IDomain"
+	name="hasAccount"
+	class="eudat.accounting.server.browser.domain.DomainView"
+	attribute="hasAccount"
+	permission="eudat.accounting.server.add_account"
+	/>
+
+  <browser:page
+	for="eudat.accounting.server.interfaces.IDomain"
 	name="addAccount"
 	class="eudat.accounting.server.browser.domain.DomainView"
 	attribute="addAccount"

@@ -80,3 +80,14 @@ class AccountView(BrowserView):
         self.request.response.setHeader('Content-type', 'application/json')
         self.request.response.setHeader('Content-length', str(len(json_data)))
         return json_data
+
+    def dumpJson(self):
+        account = self.context
+        records = getattr(account, '_data', None)
+
+        values = {k: v for k, v in account.propertyItems()}
+
+        if records:
+            values['records'] = {k: v for k, v in records.objectMap()}
+
+        return json.dumps(values)

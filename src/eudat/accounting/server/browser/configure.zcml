@@ -45,5 +45,21 @@
 	permission="eudat.accounting.server.view_record"
 	/>
 
+  <browser:page
+	for="eudat.accounting.server.interfaces.IAccount"
+	name="dumpJson"
+	class="eudat.accounting.server.browser.account.AccountView"
+	attribute="dumpJson"
+	permission="eudat.accounting.server.view_record"
+	/>
+
+  <browser:page
+	for="eudat.accounting.server.interfaces.IDomain"
+	name="dumpJson"
+	class="eudat.accounting.server.browser.domain.DomainView"
+	attribute="dumpJson"
+	permission="eudat.accounting.server.add_account"
+	/>
+
 </configure>
 

@@ -41,3 +41,12 @@ class DomainView(BrowserView):
         self.request.response.setStatus(201)
         return 'Account {} ({}) created'.format(id, title)
 
+    def dumpJson(self):
+        domain = self.context
+
+        values = {k: v for k, v in domain.propertyItems()}
+
+        values['accounts'] = [k for k in domain.keys()]
+
+        return json.dumps(values)
+

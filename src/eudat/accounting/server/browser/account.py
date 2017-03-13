@@ -84,6 +84,7 @@ class AccountView(BrowserView):
     def dumpJson(self):
         account = self.context
         records = getattr(account, '_data', None)
+        owner = self.context.getOwner()
 
         values = {
             'properties': {k: v for k, v in account.propertyItems()},
@@ -96,6 +97,11 @@ class AccountView(BrowserView):
         else:
             # explicitly state to user that there are no records
             values['records'] = {}
+
+        if owner:
+            values['ownership'] = owner.getUserName()
+        else:
+            values['ownership'] = None
 
         json_data = json.dumps(values, indent=4)
         self.request.response.setHeader('Content-type', 'application/json')

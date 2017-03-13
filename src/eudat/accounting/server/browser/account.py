@@ -85,9 +85,19 @@ class AccountView(BrowserView):
         account = self.context
         records = getattr(account, '_data', None)
 
-        values = {k: v for k, v in account.propertyItems()}
+        values = {
+            'properties': {k: v for k, v in account.propertyItems()},
+        }
 
         if records:
-            values['records'] = {k: v for k, v in records.objectMap()}
+            # lazy creation of records collection (when adding first record) implies this check for existence
+            # of that collection
+            values['records'] = {k: {k: v for k, v in record.items()} for k, record in records.items()}
+        else:
+            # explicitly state to user that there are no records
+            values['records'] = {}
 
-        return json.dumps(values)
+        json_data = json.dumps(values, indent=4)
+        self.request.response.setHeader('Content-type', 'application/json')
+        self.request.response.setHeader('Content-length', str(len(json_data)))
+        return json_data

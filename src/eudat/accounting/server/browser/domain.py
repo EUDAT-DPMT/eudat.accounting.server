@@ -44,9 +44,13 @@ class DomainView(BrowserView):
     def dumpJson(self):
         domain = self.context
 
-        values = {k: v for k, v in domain.propertyItems()}
+        values = {
+            'properties': {k: v for k, v in domain.propertyItems()},
+            'accounts': [k for k in domain.keys()],
+        }
 
-        values['accounts'] = [k for k in domain.keys()]
-
-        return json.dumps(values)
+        json_data = json.dumps(values, indent=4)
+        self.request.response.setHeader('Content-type', 'application/json')
+        self.request.response.setHeader('Content-length', str(len(json_data)))
+        return json_data
 

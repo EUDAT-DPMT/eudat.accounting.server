@@ -88,6 +88,7 @@ class AccountView(BrowserView):
 
         values = {
             'properties': {k: v for k, v in account.propertyItems()},
+            'ownership': owner.getUserName(),
         }
 
         if records:
@@ -97,11 +98,6 @@ class AccountView(BrowserView):
         else:
             # explicitly state to user that there are no records
             values['records'] = {}
-
-        if owner:
-            values['ownership'] = owner.getUserName()
-        else:
-            values['ownership'] = None
 
         json_data = json.dumps(values, indent=4)
         self.request.response.setHeader('Content-type', 'application/json')

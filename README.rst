@@ -45,7 +45,11 @@ Installation
 ============
 
 The recommended way to install the service is by using buildout 
-within a virtual environment. 
+within a virtual environment. There is a ready-made buildout
+configuration available on GitHub (eudat.accounting.server_buildout_) 
+but you can just as well roll out your own:
+
+.. _eudat.accounting.server_buildout: https://github.com/EUDAT-DPMT/eudat.accounting.server_buildout
 
 1. Create a virtual environment with a recent version of Python 2.7
 
@@ -211,6 +215,47 @@ resulting in
 
 Note that you have to take care that data are encoded correctly yourself.
 
+Rather than embedding the record data in the URL directly you can
+also collect them in a file and pass it via curl. Assume you have
+a file `record.txt` with the following conent:
+
+.. code:: console
+
+  core.value:record=321&
+  core.unit:record=GB&
+  core.type:record=storage&
+  meta.comment:record=This+is+a+comment&
+  meta.number:record=42&
+  meta.object_type:record=registered+object
+
+Calling then
+
+
+.. code:: console
+
+  $ curl -u "probe:<secret>"  -d @record.txt https://accounting.eudat.eu/demo/12345/addRecord
+
+will result in 
+
+.. code:: console
+
+  [
+    {
+        "core": {
+            "type": "storage",
+            "value": "321",
+            "unit": "GB"
+        },
+        "meta": {
+            "comment": "This is a comment",
+            "object_type": "registered object",
+            "number": "42",
+            "ts": 1489493390,
+            "submission_time": "2017-03-14 12:09:50"
+        }
+    },
+  [..]
+
 With respect to the keys supported (``value``, ``unit``, ``comment``) and
 the grouping (what goes into ``core`` and what goes into ``meta``) you 
 are completely free to use whatever you want thereby implementing
@@ -220,8 +265,6 @@ In EUDAT, we have adopted the convention that ``core`` needs to have
 a ``value``, a ``unit`` and a ``type`` whereas everything in ``meta`` is
 optional. You can look at the clients_ if you want to see this 
 demonstrated further. 
-
-
 
 
 .. _clients: https://github.com/EUDAT-DPMT/eudat.accounting.client 

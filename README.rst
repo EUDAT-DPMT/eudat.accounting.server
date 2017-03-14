@@ -217,7 +217,7 @@ Note that you have to take care that data are encoded correctly yourself.
 
 Rather than embedding the record data in the URL directly you can
 also collect them in a file and pass it via curl. Assume you have
-a file `record.txt` with the following conent:
+a file ``record.txt`` with the following conent:
 
 .. code:: console
 
@@ -239,6 +239,7 @@ will result in
 
 .. code:: console
 
+  $ curl -u "probe:<secret>" "http://localhost:8080/demo/12345/listRecords
   [
     {
         "core": {

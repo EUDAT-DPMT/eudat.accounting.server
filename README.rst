@@ -18,7 +18,7 @@ Record creation is easiest with the accompanying command
 line client available from 
 https://github.com/EUDAT-DPMT/eudat.accounting.client
 but any way to generate a suitble HTTP request will work
-(see 'Adding Records'_ below).
+(see `Adding Records`_ below).
 
 Accumulated records are available per account in JSON format.
 
@@ -157,11 +157,11 @@ like in
   $ curl -u "probe:<secret>" "http://localhost:8080/demo/12345/addRecord?core.value:record=321&core.unit:record=TB&core.type:record=storage"
 
 This is assuming that you have an accounting service running 
-at `localhost` on port `8080` and a domain called `demo` with 
-an account `12345` and a user `probe` with the correponding 
-password `<secret>`. 
-Using the `:record` qualifier tells Zope to group the `type`, `value`
-and `unit` into a dictionary called `core` as can be seen when 
+at ``localhost`` on port ``8080`` and a domain called ``demo`` with 
+an account ``12345`` and a user ``probe`` with the corresponding 
+password ``<secret>``. 
+Using the ``:record`` qualifier tells Zope to group the ``type``, ``value``
+and ``unit`` into a dictionary called ``core`` as can be seen when 
 recalling the data just submitted:
 
 .. code:: console
@@ -211,13 +211,13 @@ resulting in
 
 Note that you have to take care that data are encoded correctly yourself.
 
-With respect to the keys supported (`value`, `unit`, `comment`) and
-the grouping (what goes into `core` and what goes into `meta`) you 
+With respect to the keys supported (``value``, ``unit``, ``comment``) and
+the grouping (what goes into ``core`` and what goes into ``meta``) you 
 are completely free to use whatever you want thereby implementing
 any policy you like.
 
-In EUDAT, we have adopted the convention that `core` needs to have 
-a `value`, a `unit` and a `type` whereas everything in `meta` is
+In EUDAT, we have adopted the convention that ``core`` needs to have 
+a ``value``, a ``unit`` and a ``type`` whereas everything in ``meta`` is
 optional. You can look at the clients_ if you want to see this 
 demonstrated further. 
 

@@ -15,9 +15,10 @@ is no user interface except for a few primitiv web-based
 admin views to create domains, accounts and users.
 
 Record creation is easiest with the accompanying command
-line client available from https://github.com/EUDAT-DPMT/eudat.accounting.client
+line client available from 
+https://github.com/EUDAT-DPMT/eudat.accounting.client
 but any way to generate a suitble HTTP request will work
-(details below).
+(see 'Adding Records'_ below).
 
 Accumulated records are available per account in JSON format.
 
@@ -142,6 +143,88 @@ are just ``BTreeFolders`` but this time marked with
 That's it. Now, records can be added to these accouts using 
 the client mentioned above and records can be listed by invoking
 ``<base_url>/<domain_id>/<account_id>/listRecords``
+
+Adding Records
+==============
+
+While it is most convenient to add records using one of the clients_
+it is also possible to do this *by hand*. One way is to call an
+appropriately crafted URL including all data to be transmitted 
+like in
+
+.. code:: console
+
+  $ curl -u "probe:<secret>" "http://localhost:8080/demo/12345/addRecord?core.value:record=321&core.unit:record=TB&core.type:record=storage"
+
+This is assuming that you have an accounting service running 
+at `localhost` on port `8080` and a domain called `demo` with 
+an account `12345` and a user `probe` with the correponding 
+password `<secret>`. 
+Using the `:record` qualifier tells Zope to group the `type`, `value`
+and `unit` into a dictionary called `core` as can be seen when 
+recalling the data just submitted:
+
+.. code:: console
+
+  $ curl -u "probe:<secret>" http://localhost:8080/demo/12345/listRecords
+  [
+    {
+        "core": {
+            "type": "storage",
+            "value": "321", 
+            "unit": "TB"
+        }, 
+        "meta": {
+            "ts": 1489476898, 
+            "submission_time": "2017-03-14 07:34:58"
+        }
+    }, 
+  [...]
+
+Note how the submission time (in UTC) has been added as meta data 
+to the record. You can also provide additional meta data yourself
+as in 
+
+.. code:: console
+
+  $ curl -u "probe:<secret>" "http://localhost:8080/demo/12345/addRecord?core.value:record=321&core.unit:record=TB&core.type:record=storage&meta.comment:record=This+is+a+demo"
+
+resulting in 
+
+.. code:: console
+
+  $ curl -u "probe:http://localhost:8080/demo/12345/listRecords
+  [
+    {
+        "core": {
+            "type": "storage",
+            "value": "325", 
+            "unit": "TB"
+        }, 
+        "meta": {
+            "comment": "This is a comment", 
+            "ts": 1489477707, 
+            "submission_time": "2017-03-14 07:48:27"
+        }
+    }, 
+  [..]
+
+Note that you have to take care that data are encoded correctly yourself.
+
+With respect to the keys supported (`value`, `unit`, `comment`) and
+the grouping (what goes into `core` and what goes into `meta`) you 
+are completely free to use whatever you want thereby implementing
+any policy you like.
+
+In EUDAT, we have adopted the convention that `core` needs to have 
+a `value`, a `unit` and a `type` whereas everything in `meta` is
+optional. You can look at the clients_ if you want to see this 
+demonstrated further. 
+
+
+
+
+.. _clients: https://github.com/EUDAT-DPMT/eudat.accounting.client 
 
 
 Developer notes

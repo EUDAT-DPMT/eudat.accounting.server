@@ -193,7 +193,7 @@ resulting in
 
 .. code:: console
 
-  $ curl -u "probe:http://localhost:8080/demo/12345/listRecords
+  $ curl -u "probe:<secret>" "http://localhost:8080/demo/12345/listRecords
   [
     {
         "core": {

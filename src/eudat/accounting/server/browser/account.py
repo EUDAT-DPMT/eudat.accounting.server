@@ -80,3 +80,26 @@ class AccountView(BrowserView):
         self.request.response.setHeader('Content-type', 'application/json')
         self.request.response.setHeader('Content-length', str(len(json_data)))
         return json_data
+
+    def dumpJson(self):
+        account = self.context
+        records = getattr(account, '_data', None)
+        owner = self.context.getOwner()
+
+        values = {
+            'properties': {k: v for k, v in account.propertyItems()},
+            'ownership': owner.getUserName(),
+        }
+
+        if records:
+            # lazy creation of records collection (when adding first record) implies this check for existence
+            # of that collection
+            values['records'] = {k: {k: v for k, v in record.items()} for k, record in records.items()}
+        else:
+            # explicitly state to user that there are no records
+            values['records'] = {}
+
+        json_data = json.dumps(values, indent=4)
+        self.request.response.setHeader('Content-type', 'application/json')
+        self.request.response.setHeader('Content-length', str(len(json_data)))
+        return json_data
